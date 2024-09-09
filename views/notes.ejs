@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Notes</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <div class="container">
+        <nav>
+            <% if (note) { %>
+                <a href="/notes" class="btn btn-secondary" id="new-note-button">New Note</a>
+            <% } else { %>
+                <button id="clear-form" class="btn btn-secondary">Clear Form</button>
+            <% } %>
+            <% if (!note) { %>
+                <button id="save-note" class="btn btn-primary">Save Note</button>
+            <% } %>
+        </nav>
+        <div class="content">
+            <div class="left-column">
+                <ul>
+                    <% notes.forEach(note => { %>
+                        <li>
+                            <a href="/note/<%= note.id %>"><%= note.title %></a>
+                        </li>
+                    <% }); %>
+                </ul>
+            </div>
+            <div class="right-column">
+                <form id="note-form" action="/save-note" method="POST">
+                    <input type="hidden" name="id" value="<%= note ? note.id : '' %>">
+                    <div class="form-group">
+                        <label for="title">Title</label>
+                        <input type="text" id="title" name="title" value="<%= note ? note.title : '' %>">
+                    </div>
+                    <div class="form-group">
+                        <label for="text">Text</label>
+                        <textarea id="text" name="text" rows="10"><%= note ? note.text : '' %></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Save Note</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="/js/script.js"></script>
+</body>
+</html>
